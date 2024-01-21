@@ -2,12 +2,12 @@ package kijja.amityexam.todolist.ui.screen
 
 import kijja.amityexam.todolist.data.model.TodoListEntity
 
-sealed class TodoListState {
-    data object Loading : TodoListState()
+sealed class DetailListViewState {
+    data object Loading : DetailListViewState()
 
-    data object Error : TodoListState()
+    data object Error : DetailListViewState()
 
     data class Success(
         val data: List<TodoListEntity>? = null,
-    ) : TodoListState()
+    ) : DetailListViewState()
 }
