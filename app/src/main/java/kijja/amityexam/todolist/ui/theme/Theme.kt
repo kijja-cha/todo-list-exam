@@ -32,7 +32,6 @@ fun TodoListTheme(
     MaterialTheme(
         colors = LightColorScheme,
         typography = Typography,
-        shapes = TodoShape,
         content = content,
     )
 }
