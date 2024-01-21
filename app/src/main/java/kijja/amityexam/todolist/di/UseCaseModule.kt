@@ -14,4 +14,7 @@ import kijja.amityexam.todolist.domain.GetUserListUseCaseImpl
 interface UseCaseModule {
     @Binds
     fun bindsGetUserListUseCase(getUserListUseCase: GetUserListUseCaseImpl): GetUserListUseCase
+
+    @Binds
+    fun bindsGetDetailListUseCase(getDetailListUseCase: GetDetailListUseCaseImpl): GetDetailListUseCase
 }

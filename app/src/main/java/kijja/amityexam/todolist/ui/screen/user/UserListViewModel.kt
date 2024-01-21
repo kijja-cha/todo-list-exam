@@ -38,7 +38,7 @@ class UserListViewModel
                 // Execute the getUserListUseCase in the IO dispatcher
                 getUserListUseCase.getUserList()
                     .flowOn(Dispatchers.IO)
-                    .catch { exception ->
+                    .catch {
                         // Handle any exceptions by updating the screen state to error
                         _screenState.value = UserListViewState.Error
                     }
