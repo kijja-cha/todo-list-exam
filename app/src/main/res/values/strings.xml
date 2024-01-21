@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">TodoList</string>
+    <string name="common_error_title">Sorry</string>
     <string name="common_error_message">Something went wrong.</string>
-    <string name="retry">Retry</string>
 </resources>
