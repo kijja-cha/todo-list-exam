@@ -1,5 +1,6 @@
 package kijja.amityexam.todolist.ui.screen.user
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -33,7 +34,8 @@ class UserListViewModel
         }
 
         // Function to load user list data asynchronously
-        private fun loadData() {
+        @VisibleForTesting
+        fun loadData() {
             viewModelScope.launch {
                 // Execute the getUserListUseCase in the IO dispatcher
                 todoListRepository.getUserList()

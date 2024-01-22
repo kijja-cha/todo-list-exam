@@ -1,5 +1,6 @@
 package kijja.amityexam.todolist.ui.screen.detail
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,7 +35,8 @@ class DetailListViewModel
         }
 
         // Function to load to-do list data asynchronously based on the user id
-        private fun loadData(userId: Int) {
+        @VisibleForTesting
+        fun loadData(userId: Int) {
             viewModelScope.launch {
                 // Execute the getTodoListByUserId function in the IO dispatcher
                 todoListRepository.getTodoListByUserId(userId)

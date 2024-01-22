@@ -13,6 +13,9 @@ lifecycle = "2.7.0"
 activity-compose = "1.8.2"
 compose-bom = "2023.10.01"
 room = "2.5.2"
+coroutines = "1.7.1"
+mockk = "1.13.8"
+serializationJson = "1.4.1"
 
 [libraries]
 androidx-core = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -31,6 +34,12 @@ compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 compose-materail = { module = "androidx.compose.material:material" }
+coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "coroutines" }
+coroutines-core = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines-playServices = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-play-services", version.ref = "coroutines" }
+coroutines-rx = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-rx2", version.ref = "coroutines" }
+coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
+coroutines-serializationJson = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serializationJson" }
 hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
 ktor-okhttp = { module = "io.ktor:ktor-client-okhttp", version.ref = "ktor" }
@@ -40,6 +49,9 @@ ktor-gson = { module = "io.ktor:ktor-serialization-gson", version.ref = "ktor" }
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+mockTest-mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
+mockTest-mockkAndroid = { group = "io.mockk", name = "mockk-android", version.ref = "mockk" }
+mockTest-MockkAgent = { group = "io.mockk", name = "mockk-agent-jvm", version.ref = "mockk" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -51,3 +63,4 @@ kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose-ui = ["compose-materail", "compose-ui-graphics", "compose-ui-tooling", "compose-ui-tooling-preview", "activity-compose", "compose-hilt-navigation"]
 ktor = ["ktor-gson", "ktor-logging", "ktor-negotiation", "ktor-okhttp"]
 room = ["room-runtime", "room-ktx"]
+coroutines = ["coroutines-android", "coroutines-core", "coroutines-playServices", "coroutines-rx"]
