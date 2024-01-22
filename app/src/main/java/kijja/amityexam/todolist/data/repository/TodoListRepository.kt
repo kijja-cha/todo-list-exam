@@ -23,28 +23,41 @@ class TodoListRepositoryImpl
         private val httpClient: HttpClient,
         private val databaseRepository: TodoListDatabaseRepositoryImpl,
     ) : TodoListRepository {
+        // Retrieve the user list, either from Room database or by fetching from the network
         override fun getUserList(): Flow<List<Int>> {
             return flow {
+                // Check if data is already loaded in the Room database
                 if (databaseRepository.isLoadedData()) {
+                    // Emit the user list from Room
                     emit(databaseRepository.getUserListFromRoom())
                 } else {
+                    // Fetch user list from the network using HttpClient
                     val response = httpClient.get("/todos")
+
+                    // Check if the network request was successful
                     if (response.status.isSuccess()) {
+                        // Initialize the Room database with the fetched data
                         databaseRepository.initTodoListDatabaseToRoom(response.body())
+
+                        // Emit the user list from Room
                         emit(databaseRepository.getUserListFromRoom())
                     } else {
-                        emit(listOf())
+                        // Emit an empty list if there was an error fetching data from the network
+                        emit(emptyList())
                     }
                 }
             }
         }
 
+        // Retrieve the to-do list for a specific user from the Room database
         override fun getTodoListByUserId(userId: Int): Flow<List<TodoListEntity>> {
             return flow {
+                // Emit the to-do list for the specified user from Room
                 emit(databaseRepository.getTodoListByUserIdFromRoom(userId))
             }
         }
 
+        // Update a todo list item in the Room database
         override suspend fun updateTodoList(item: TodoListEntity) {
             databaseRepository.updateTodoListDatabaseInRoom(item)
         }
