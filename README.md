@@ -5,7 +5,7 @@
 * UI completely in Jetpack Compose
 * Uses Kotlin Coroutines
 * Uses Kotlin Flow
-* Uses many of the Architecture Components, including: Room, DataStore, Navigation, ViewModel
+* Uses many of the Architecture Components, including: Room, Navigation, ViewModel
 * Uses Hilt for dependency injection
 
 ## Screen
