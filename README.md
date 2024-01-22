@@ -10,5 +10,5 @@
 
 ## Screen
 
-<img src="image/user-list.png" width="260">  <img src="art/detail-list.png" width="260">
+<img src="image/user-list.png" width="260">  <img src="image/detail-list.png" width="260">
 <img src="image/todolist.gif" width="400">
