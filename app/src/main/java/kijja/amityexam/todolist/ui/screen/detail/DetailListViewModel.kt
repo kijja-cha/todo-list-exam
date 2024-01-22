@@ -45,9 +45,9 @@ class DetailListViewModel
             }
         }
 
-        fun onClickAddButton() {
-        }
-
         fun onCheckedItemChange(item: TodoListEntity) {
+            viewModelScope.launch {
+                todoListRepository.updateTodoList(item)
+            }
         }
     }

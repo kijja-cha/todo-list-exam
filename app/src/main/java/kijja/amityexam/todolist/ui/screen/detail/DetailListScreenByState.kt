@@ -8,7 +8,6 @@ import kijja.amityexam.todolist.ui.component.LoadingView
 @Composable
 fun DetailListScreenByState(
     viewState: DetailListViewState?,
-    onClickAddButton: () -> Unit,
     onItemCheckedChange: (TodoListEntity) -> Unit,
 ) {
     // Display different screens based on the current state
@@ -27,7 +26,6 @@ fun DetailListScreenByState(
             // Display the success screen with the to-do list data
             DetailListScreen(
                 data = viewState.data,
-                onClickAddButton = onClickAddButton,
                 onItemCheckedChange = onItemCheckedChange,
             )
         }

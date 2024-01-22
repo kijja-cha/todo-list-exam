@@ -12,17 +12,12 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Checkbox
-import androidx.compose.material.FloatingActionButton
-import androidx.compose.material.Icon
 import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
@@ -36,7 +31,6 @@ import kijja.amityexam.todolist.ui.theme.TodoListTheme
 @Composable
 fun DetailListScreen(
     data: List<TodoListEntity>?,
-    onClickAddButton: () -> Unit,
     onItemCheckedChange: (TodoListEntity) -> Unit,
 ) {
     // Remember the lazy list state to maintain scroll position
@@ -94,7 +88,7 @@ private fun TodoItemList(
                         onCheckedChange = {
                             checkedState.value = it
                             // Invoke the provided callback when the checked state changes
-                            onItemCheckedChange.invoke(todoItem)
+                            onItemCheckedChange.invoke(todoItem.copy(status = it))
                         },
                     )
 
@@ -126,17 +120,6 @@ private fun TodoItemList(
                 }
             },
         )
-    }
-}
-
-@Composable
-fun CustomFloatingActionButton(onClickAddButton: () -> Unit) {
-    FloatingActionButton(
-        onClick = onClickAddButton,
-        backgroundColor = Color.Blue,
-        contentColor = Color.White
-    ){
-        Icon(Icons.Filled.Add,"")
     }
 }
 

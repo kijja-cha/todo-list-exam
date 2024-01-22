@@ -13,6 +13,8 @@ interface TodoListRepository {
     fun getUserList(): Flow<List<Int>>
 
     fun getTodoListByUserId(userId: Int): Flow<List<TodoListEntity>>
+
+    suspend fun updateTodoList(item: TodoListEntity)
 }
 
 class TodoListRepositoryImpl
@@ -25,13 +27,14 @@ class TodoListRepositoryImpl
             return flow {
                 if (databaseRepository.isLoadedData()) {
                     emit(databaseRepository.getUserListFromRoom())
-                }
-                val response = httpClient.get("/todos")
-                if (response.status.isSuccess()) {
-                    databaseRepository.initTodoListDatabaseToRoom(response.body())
-                    emit(databaseRepository.getUserListFromRoom())
                 } else {
-                    emit(listOf())
+                    val response = httpClient.get("/todos")
+                    if (response.status.isSuccess()) {
+                        databaseRepository.initTodoListDatabaseToRoom(response.body())
+                        emit(databaseRepository.getUserListFromRoom())
+                    } else {
+                        emit(listOf())
+                    }
                 }
             }
         }
@@ -40,5 +43,9 @@ class TodoListRepositoryImpl
             return flow {
                 emit(databaseRepository.getTodoListByUserIdFromRoom(userId))
             }
+        }
+
+        override suspend fun updateTodoList(item: TodoListEntity) {
+            databaseRepository.updateTodoListDatabaseInRoom(item)
         }
     }

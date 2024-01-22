@@ -13,11 +13,7 @@ interface TodoListDatabaseRepository {
 
     suspend fun initTodoListDatabaseToRoom(list: List<TodoListEntity>)
 
-    suspend fun addTodoListDatabaseToRoom(todoListEntity: TodoListEntity)
-
     suspend fun updateTodoListDatabaseInRoom(todoListEntity: TodoListEntity)
-
-    suspend fun deleteTodoListDatabaseFromRoom(todoListEntity: TodoListEntity)
 }
 
 class TodoListDatabaseRepositoryImpl
@@ -33,9 +29,5 @@ class TodoListDatabaseRepositoryImpl
 
         override suspend fun initTodoListDatabaseToRoom(list: List<TodoListEntity>) = todoListDao.insertAllTodos(list)
 
-        override suspend fun addTodoListDatabaseToRoom(todoListEntity: TodoListEntity) = todoListDao.insert(todoListEntity)
-
         override suspend fun updateTodoListDatabaseInRoom(todoListEntity: TodoListEntity) = todoListDao.update(todoListEntity)
-
-        override suspend fun deleteTodoListDatabaseFromRoom(todoListEntity: TodoListEntity) = todoListDao.delete(todoListEntity)
     }

@@ -29,7 +29,6 @@ fun DetailListContainer(
     ) {
         DetailListScreenByState(
             viewState = screenState,
-            onClickAddButton = viewModel::onClickAddButton,
             onItemCheckedChange = viewModel::onCheckedItemChange
         )
     }

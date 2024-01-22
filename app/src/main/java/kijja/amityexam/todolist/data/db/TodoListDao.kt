@@ -1,7 +1,6 @@
 package kijja.amityexam.todolist.data.db
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -16,15 +15,9 @@ interface TodoListDao {
     @Query("SELECT userId FROM todos GROUP BY userId")
     suspend fun getUserList(): List<Int>
 
-    @Insert
-    suspend fun insert(todo: TodoListEntity)
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllTodos(list: List<TodoListEntity>)
 
     @Update
     suspend fun update(todo: TodoListEntity)
-
-    @Delete
-    suspend fun delete(todo: TodoListEntity)
 }
