@@ -10,20 +10,35 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 interface TodoListRepository {
-    fun getTodo(): Flow<Result<List<TodoListEntity>>>
+    fun getUserList(): Flow<List<Int>>
+
+    fun getTodoListByUserId(userId: Int): Flow<List<TodoListEntity>>
 }
 
 class TodoListRepositoryImpl
     @Inject
-    constructor(private val httpClient: HttpClient) : TodoListRepository {
-        override fun getTodo(): Flow<Result<List<TodoListEntity>>> {
+    constructor(
+        private val httpClient: HttpClient,
+        private val databaseRepository: TodoListDatabaseRepositoryImpl,
+    ) : TodoListRepository {
+        override fun getUserList(): Flow<List<Int>> {
             return flow {
+                if (databaseRepository.isLoadedData()) {
+                    emit(databaseRepository.getUserListFromRoom())
+                }
                 val response = httpClient.get("/todos")
                 if (response.status.isSuccess()) {
-                    emit(Result.success(response.body()))
+                    databaseRepository.initTodoListDatabaseToRoom(response.body())
+                    emit(databaseRepository.getUserListFromRoom())
                 } else {
-                    emit(Result.failure(IllegalStateException()))
+                    emit(listOf())
                 }
+            }
+        }
+
+        override fun getTodoListByUserId(userId: Int): Flow<List<TodoListEntity>> {
+            return flow {
+                emit(databaseRepository.getTodoListByUserIdFromRoom(userId))
             }
         }
     }

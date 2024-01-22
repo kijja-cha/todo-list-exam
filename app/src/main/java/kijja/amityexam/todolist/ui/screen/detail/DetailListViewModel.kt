@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kijja.amityexam.todolist.data.model.TodoListEntity
-import kijja.amityexam.todolist.domain.GetDetailListUseCase
+import kijja.amityexam.todolist.data.repository.TodoListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailListViewModel
     @Inject
-    constructor(private val getDetailListUseCase: GetDetailListUseCase) : ViewModel() {
+    constructor(private val todoListRepository: TodoListRepository) : ViewModel() {
         private val _screenState = MutableStateFlow<DetailListViewState>(DetailListViewState.Loading)
         val screenState = _screenState.asStateFlow()
 
@@ -31,19 +31,15 @@ class DetailListViewModel
 
         private fun loadData(userId: Int) {
             viewModelScope.launch {
-                getDetailListUseCase.getDetailListByUser(userId)
+                todoListRepository.getTodoListByUserId(userId)
                     .flowOn(Dispatchers.IO)
                     .catch {
                         _screenState.value = DetailListViewState.Error
-                    }.collect { result ->
-                        result.onSuccess { data ->
-                            if (data.isEmpty()) {
-                                _screenState.value = DetailListViewState.Error
-                            } else {
-                                _screenState.value = DetailListViewState.Success(data)
-                            }
-                        }.onFailure {
+                    }.collect { data ->
+                        if (data.isEmpty()) {
                             _screenState.value = DetailListViewState.Error
+                        } else {
+                            _screenState.value = DetailListViewState.Success(data)
                         }
                     }
             }

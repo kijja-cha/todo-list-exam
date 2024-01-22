@@ -3,7 +3,7 @@ package kijja.amityexam.todolist.ui.screen.user
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kijja.amityexam.todolist.domain.GetUserListUseCase
+import kijja.amityexam.todolist.data.repository.TodoListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserListViewModel
     @Inject
-    constructor(private val getUserListUseCase: GetUserListUseCase) : ViewModel() {
+    constructor(private val todoListRepository: TodoListRepository) : ViewModel() {
         // MutableStateFlow to represent the screen state of the user list
         private val _screenState = MutableStateFlow<UserListViewState>(UserListViewState.Loading)
         val screenState = _screenState.asStateFlow()
@@ -36,24 +36,19 @@ class UserListViewModel
         private fun loadData() {
             viewModelScope.launch {
                 // Execute the getUserListUseCase in the IO dispatcher
-                getUserListUseCase.getUserList()
+                todoListRepository.getUserList()
                     .flowOn(Dispatchers.IO)
                     .catch {
                         // Handle any exceptions by updating the screen state to error
                         _screenState.value = UserListViewState.Error
                     }
-                    .collect { result ->
+                    .collect { data ->
                         // Process the result of getUserListUseCase
-                        result.onSuccess { data ->
-                            // If the data is not empty, update the screen state to success
-                            if (data.isNotEmpty()) {
-                                _screenState.value = UserListViewState.Success(data)
-                            } else {
-                                // If the data is empty, update the screen state to error
-                                _screenState.value = UserListViewState.Error
-                            }
-                        }.onFailure {
-                            // If there is a failure, update the screen state to error
+                        // If the data is not empty, update the screen state to success
+                        if (data.isNotEmpty()) {
+                            _screenState.value = UserListViewState.Success(data)
+                        } else {
+                            // If the data is empty, update the screen state to error
                             _screenState.value = UserListViewState.Error
                         }
                     }
