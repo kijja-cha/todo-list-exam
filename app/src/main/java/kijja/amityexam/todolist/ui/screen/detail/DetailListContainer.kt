@@ -8,12 +8,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 
 @Composable
 fun DetailListContainer(
     viewModel: DetailListViewModel = hiltViewModel(),
-    userId: Int?
+    userId: Int?,
 ) {
     // Collect the screen state from the view model
     val screenState by viewModel.screenState.collectAsStateWithLifecycle()
@@ -21,15 +20,19 @@ fun DetailListContainer(
     // Launch effect to trigger initial data loading when the screen is created
     LaunchedEffect(userId) {
         userId?.let {
+            // Initialize data loading when userId is not null
             viewModel.initLoadData(userId)
         }
     }
+
+    // Box layout to contain the DetailListScreenByState
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
+        // Display the DetailListScreenByState based on the current screen state
         DetailListScreenByState(
             viewState = screenState,
-            onItemCheckedChange = viewModel::onCheckedItemChange
+            onItemCheckedChange = viewModel::onCheckedItemChange,
         )
     }
 }

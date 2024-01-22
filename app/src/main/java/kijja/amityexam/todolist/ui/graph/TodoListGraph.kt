@@ -11,22 +11,29 @@ import kijja.amityexam.todolist.ui.screen.user.UserListContainer
 
 @Composable
 fun TodoListGraph() {
+    // Create a NavHost with a NavController to navigate between destinations
     val navController = rememberNavController()
+
+    // Define the navigation graph with start destination and composable destinations
     NavHost(
         navController = navController,
         startDestination = TodoListDestinations.USER_LIST.route,
     ) {
+        // Composable for the User List screen
         composable(TodoListDestinations.USER_LIST.route) {
             UserListContainer(
-                navHostController = navController
+                navHostController = navController,
             )
         }
+
+        // Composable for the Detail List screen with a dynamic userId argument
         composable(
             TodoListDestinations.DETAIL_LIST.route + "/{userId}",
-            arguments = listOf(navArgument("userId") { type = NavType.IntType })
+            arguments = listOf(navArgument("userId") { type = NavType.IntType }),
         ) { backStackEntry ->
             DetailListContainer(
-                userId = backStackEntry.arguments?.getInt("userId")
+                // Extract userId from the navigation arguments
+                userId = backStackEntry.arguments?.getInt("userId"),
             )
         }
     }

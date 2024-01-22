@@ -50,7 +50,7 @@ fun DetailListScreen(
             // Display the list of to-do items
             TodoItemList(
                 lazyListState,
-                data.orEmpty(),
+                todoList = data.orEmpty(),
                 onItemCheckedChange = onItemCheckedChange,
             )
         }
@@ -63,11 +63,13 @@ private fun TodoItemList(
     todoList: List<TodoListEntity>,
     onItemCheckedChange: (TodoListEntity) -> Unit,
 ) {
+    // LazyColumn to efficiently display a list of to-do items
     LazyColumn(
         state = lazyListState,
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 8.dp),
         modifier = Modifier.fillMaxSize(),
     ) {
+        // Iterate through the list of to-do items and create items based on their data
         items(
             count = todoList.size,
             key = { index ->
